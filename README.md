@@ -8,8 +8,17 @@ library may break unexpectedly.
 using `aiohttp`, requiring a `ClientSession`.
 
 ## Installation
+streetlevel is available on PyPI:
+
 ```sh
 pip install streetlevel
+```
+
+macOS users may need to install [additional dependencies](https://github.com/LeoHsiao1/pyexiv2/blob/master/docs/Tutorial.md#faq):
+
+```sh
+brew install gettext
+brew install inih
 ```
 
 ## Example
