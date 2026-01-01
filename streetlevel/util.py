@@ -173,11 +173,13 @@ async def download_files_async(urls: List[str], session: ClientSession = None) -
     close_session = session is None
     session = session if session else ClientSession()
 
-    tasks = [session.get(url) for url in urls]
-    responses = await asyncio.gather(*tasks)
-    data = []
-    for response in responses:
-        data.append(await response.read())
+    async def download_one(url: str) -> bytes:
+        async with session.get(url) as response:
+            response.raise_for_status()
+            return await response.read()
+
+    tasks = [download_one(url) for url in urls]
+    data = await asyncio.gather(*tasks)
 
     if close_session:
         await session.close()
